@@ -63,7 +63,7 @@ jobs:
         run: |
           mkdir -p site
           echo "<h1>DraftAI docs placeholder</h1>" > site/index.html
-      - name: Publish docs to gh-pages (optional)
+      - name: Publish docs to gh-pages
         if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
         with:

@@ -67,7 +67,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.gh-pat }}
+          github_token: ${{ secrets.GH_PAT_CLASSIC }}
           publish_dir: ./site
           publish_branch: gh-pages
           allow_empty_commit: true

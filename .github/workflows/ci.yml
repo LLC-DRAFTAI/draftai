@@ -59,7 +59,10 @@ jobs:
           file: Dockerfile.mcp-client
           tags: draftai/mcp:latest
           push: false
-
+      - name: Prepare docs directory
+        run: |
+          mkdir -p site
+          echo "Documentation placeholder" > site/index.html
       - name: Publish docs to gh-pages (optional)
         if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3

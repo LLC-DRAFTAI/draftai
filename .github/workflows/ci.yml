@@ -62,7 +62,7 @@ jobs:
       - name: Prepare docs directory
         run: |
           mkdir -p site
-          echo "Documentation placeholder" > site/index.html
+          echo "<h1>DraftAI docs placeholder</h1>" > site/index.html
       - name: Publish docs to gh-pages (optional)
         if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
@@ -70,6 +70,7 @@ jobs:
           github_token: ${{ secrets.gh-pat }}
           publish_dir: ./site
           publish_branch: gh-pages
+          allow_empty_commit: true
 
       - name: Run MCP tests
         if: false

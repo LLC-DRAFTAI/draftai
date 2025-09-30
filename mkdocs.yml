@@ -1,0 +1,38 @@
+site_name: DraftAI Docs
+site_description: Документация проекта DraftAI (NLP → BIM → MCP-client)
+site_author: DraftAI Team
+repo_url: https://github.com/LLC-DRAFTAI/draftai
+repo_name: GitHub
+
+nav:
+  - Введение: index.md
+  - Установка:
+      - Локальная установка: install/local.md
+      - Docker: install/docker.md
+      - Docker Compose: install/docker_compose.md
+  - Руководство:
+      - NLP Core: guide/nlp.md
+      - BIM Core: guide/bim.md
+      - MCP Client: guide/mcp_client.md
+
+theme:
+  name: material
+  language: ru
+  palette:
+    - scheme: default
+      primary: blue
+      accent: cyan
+  features:
+    - navigation.top
+    - navigation.tabs
+    - search.suggest
+    - search.highlight
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+  - footnotes
+  - tables
+  - def_list

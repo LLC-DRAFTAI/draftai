@@ -1,0 +1,40 @@
+﻿version: "3.9"
+
+services:
+  nlp:
+    image: draftai/nlp:local
+    container_name: draftai-nlp
+    volumes:
+      - ./nlp_core/input:/app/nlp_core/input:ro
+      - ./nlp_core/OUT:/workspace/output
+    command: >
+      python /app/nlp_core/nlp_core/run_cli.py
+        --tz /app/nlp_core/input/TZ_object.docx
+        --out /workspace/output/result.json -v
+
+  bim:
+    image: draftai/bim:local
+    container_name: draftai-bim
+    depends_on:
+      - nlp
+    volumes:
+      - ./nlp_core/OUT:/workspace/input:ro
+      - ./bim_core/runs:/workspace/output
+      - ./bim_core/runs:/app/bim_core/runs
+      - ./bim_core/samples:/app/bim_core/samples:ro
+    command: >
+      python /app/bim_core/bim_core/run_cli.py
+        --tz /workspace/input/result.json
+        --out /workspace/output -v
+
+  mcp-client:
+    image: draftai/mcp-client:local
+    container_name: draftai-mcp-client
+    depends_on:
+      - bim
+    volumes:
+      - ./bim_core/runs:/workspace/runs:ro
+    command: >
+      --stubs /workspace/runs/stubs.json
+      --host host.docker.internal
+      --port 9090 -v

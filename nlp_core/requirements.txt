@@ -1,0 +1,8 @@
+spacy
+transformers
+pdfminer.six
+python-docx
+jsonschema
+ifcopenshell
+rapidfuzz
+PyPDF2

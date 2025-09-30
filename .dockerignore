@@ -1,0 +1,15 @@
+# ignore virtualenvs and local artifacts
+**/.venv
+**/venv
+**/__pycache__
+**/*.pyc
+*.log
+*.sqlite
+.env
+.vscode/
+.idea/
+.git/
+data/
+nlp_core/OUT/
+bim_core/runs/
+"@ | Out-File -Encoding utf8 .dockerignore

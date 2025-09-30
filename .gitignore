@@ -1,0 +1,29 @@
+# virtualenv
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# IDEs
+.vscode/
+.idea/
+
+# logs / outputs
+OUT/
+runs/
+*.log
+
+# secrets
+.env
+config.yml
+
+# pytest
+.pytest_cache/
+
+
+# site
+site/

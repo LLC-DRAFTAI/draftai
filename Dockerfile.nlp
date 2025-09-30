@@ -1,0 +1,26 @@
+﻿# Dockerfile.nlp
+FROM python:3.13-slim
+
+ENV PYTHONUNBUFFERED=1 LANG=C.UTF-8 LC_ALL=C.UTF-8
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential gcc g++ git wget ca-certificates \
+    libxml2-dev libxslt1-dev zlib1g-dev libffi-dev \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY nlp_core/requirements.txt /app/requirements.txt
+
+RUN pip install --upgrade pip setuptools wheel \
+ && pip install --no-cache-dir -r /app/requirements.txt \
+ && python -m spacy download ru_core_news_sm
+
+COPY nlp_core/ /app/nlp_core/
+
+RUN useradd -m appuser
+USER appuser
+WORKDIR /home/appuser
+
+# Runtime note: model ru_core_news_sm NOT downloaded here; see README instructions.
+CMD ["python", "/app/nlp_core/nlp_core/run_cli.py"]

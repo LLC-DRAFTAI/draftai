@@ -1,0 +1,14 @@
+﻿FROM python:3.13-slim
+
+ENV PYTHONUNBUFFERED=1 LANG=C.UTF-8 LC_ALL=C.UTF-8
+
+WORKDIR /app
+COPY scripts/send_stubs_cli.py /app/send_stubs_cli.py
+
+RUN useradd -m appuser
+USER appuser
+WORKDIR /home/appuser
+
+ENTRYPOINT ["python", "/app/send_stubs_cli.py"]
+
+CMD ["--stubs", "/workspace/runs/stubs.json", "--host", "host.docker.internal", "--port", "9090"]

@@ -68,4 +68,4 @@ jobs:
           publish_dir: ./site
 
       - name: Run MCP tests
-	    if: false  # отключаем
+        if: false  # отключаем

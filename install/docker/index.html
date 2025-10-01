@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="DraftAI Team" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Docker - DraftAI Docs</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Docker";
+        var mkdocs_page_input_path = "install/docker.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> DraftAI Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Введение</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Установка</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../local/">Локальная установка</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Docker</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docker_compose/">Docker Compose</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Руководство</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../guide/nlp/">NLP Core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../guide/bim/">BIM Core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../guide/mcp_client/">MCP Client</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">DraftAI Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Установка</li>
+      <li class="breadcrumb-item active">Docker</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/LLC-DRAFTAI/draftai/edit/master/docs/install/docker.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <p>Эта страница описывает, как собирать и запускать отдельные Docker-образы для компонентов: <code>nlp</code>, <code>bim</code>, <code>mcp-client</code>.</p>
+<blockquote>
+<p>Примечание: MCP (FreeCAD) не запускается в контейнере — MCP-client (контейнер) отправляет <code>stubs.json</code> на MCP, работающий локально в FreeCAD.</p>
+</blockquote>
+<hr />
+<h2 id="1">1. Подготовка<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Установи Docker Desktop (Windows/macOS) или Docker Engine (Linux).</li>
+<li>Убедись, что Docker работает: <code>docker version</code> и <code>docker info</code>.</li>
+<li>В Windows лучше иметь WSL2 включённым (рекомендуется).</li>
+</ul>
+<hr />
+<h2 id="2">2. Сборка образов (в корне репо)<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p><code>(powershell)</code></p>
+<p><em>Перейди в корень проекта</em></p>
+<p><code>cd C:\draftai</code></p>
+<ul>
+<li>NLP</li>
+</ul>
+<p><code>docker build -f Dockerfile.nlp -t draftai/nlp:local .</code></p>
+<ul>
+<li>BIM</li>
+</ul>
+<p><code>docker build -f Dockerfile.bim -t draftai/bim:local .</code></p>
+<ul>
+<li>MCP-client (отправитель)</li>
+</ul>
+<p><code>docker build -f Dockerfile.mcp-client -t draftai/mcp-client:local .</code></p>
+<p><em>Если Docker Desktop даёт ошибку при build — убедись, что в команде указан контекст . в конце (последний аргумент), и Docker Desktop запущен.</em></p>
+<p>Посмотреть список контейнеров (чтобы найти нужный)
+docker ps -a</p>
+<h2 id="3-docker-nlp">3. Запуск Docker NLP<a class="headerlink" href="#3-docker-nlp" title="Permanent link">&para;</a></h2>
+<p><code>app/nlp_core</code> — это путь внутри контейнера, а не папка на вашем Windows-диске. Docker создаёт изолированную файловую систему для контейнера: если вы не смонтировали хост-папку в контейнер через <code>-v</code>, файлы остаются в контейнере и не видны на хосте.</p>
+<p><strong>Как получить результаты из контейнера</strong></p>
+<p>Контейнеры по-умолчанию работают в изолированной файловой системе — чтобы увидеть результаты на хосте, монтируй <code>volume.</code></p>
+<p><em>Пример: запуск NLP и сохранение результата в папку на хосте</em></p>
+<p><strong>Создаём хостовую папку</strong>
+<code>New-Item -ItemType Directory -Path C:\draftai\nlp_core\OUT -Force</code></p>
+<p><strong>Запускаем контейнер и монтируем</strong> <code>OUT → /workspace/output</code></p>
+<p><code>docker run --rm \</code></p>
+<p><code>-v "C:\draftai\nlp_core\input:/app/nlp_core/input:ro" \</code></p>
+<p><code>-v "C:\draftai\nlp_core\OUT:/workspace/output" \</code></p>
+<p><code>draftai/nlp:local \</code></p>
+<p><code>python /app/nlp_core/nlp_core/run_cli.py --out /workspace/output/result.json -v</code></p>
+<p>После завершения файл <code>C:\draftai\nlp_core\OUT\result.json</code> будет содержать результат.</p>
+<p><em>либо:</em></p>
+<p>Запуск Docker NLP (создаём <code>result.json</code> на хосте)</p>
+<p>Это важный шаг: NLP должен записать <code>result.json</code> в хостовую папку C<code>:\draftai\nlp_core\OUT.</code> Выполни:</p>
+<p><code>$repo = "C:\draftai"</code></p>
+<p><code>docker run --rm `</code></p>
+<p><code>-v "${repo}\nlp_core\OUT:/workspace/output" `</code></p>
+<p><code>draftai/nlp:local `</code></p>
+<p><code>sh -c "python -m pip install --upgrade pip || true; python -m spacy download ru_core_news_sm || true; python /app/nlp_core/nlp_core/run_cli.py --out /workspace/output/result.json -v"</code></p>
+<p><strong>Пояснения:</strong></p>
+<p><code>-v "${repo}\nlp_core\OUT:/workspace/output"</code> — результат будет доступен в <code>C:\draftai\nlp_core\OUT.</code></p>
+<p>Команда внутри контейнера: обновление pip (без ошибок), попытка скачать spaCy-модель (если не включена в образ), затем запуск <code>run_cli.py.</code></p>
+<p><strong>Проверка успешности:</strong></p>
+<p><code>Test-Path "C:\draftai\nlp_core\OUT\result.json"</code>      <br />
+<code>Get-Content "C:\draftai\nlp_core\OUT\result.json"</code></p>
+<p><em>Если не появилась строка про созданный файл — смотри логи контейнера (см. раздел «Отладка» ниже).</em></p>
+<h2 id="4-docker-bim-nlp-runs">4. Запуск Docker BIM (вход — результат NLP, выход — папка runs на хосте)<a class="headerlink" href="#4-docker-bim-nlp-runs" title="Permanent link">&para;</a></h2>
+<p>После успешного шага 3 запускаем BIM. Важно — монтируем <code>nlp_core/OUT</code> так, чтобы BIM видел файл под тем путём, который он ожидает.</p>
+<p><code>docker run --rm `</code></p>
+<p><code>-v "${repo}\nlp_core\OUT:/workspace/input:ro" `</code></p>
+<p><code>-v "${repo}\bim_core\runs:/workspace/output" `</code></p>
+<p><code>-v "${repo}\bim_core\runs:/app/bim_core/runs" `</code></p>
+<p><code>draftai/bim:local `</code></p>
+<p><code>python /app/bim_core/bim_core/run_cli.py --tz /workspace/input/result.json --out /workspace/output -v</code></p>
+<h2 id="5-docker-mcp-client-mcp">5. Запуск Docker MCP-client (отправка в локальный MCP)<a class="headerlink" href="#5-docker-mcp-client-mcp" title="Permanent link">&para;</a></h2>
+<p>MCP-сервер у тебя запускается локально в FreeCAD (он слушает порт 9090 на хосте). 
+<code>exec(open(r"C:\draftai\mcp_server\mcp_serverV3.py", encoding="utf-8").read())</code></p>
+<p><strong>Отправка примитивов (stubs)</strong>
+<code>docker run --rm `</code></p>
+<p><code>-v "${repo}\bim_core\runs:/workspace/runs:ro" `</code></p>
+<p><code>draftai/mcp-client:local `</code></p>
+<p><code>python /app/send_stubs_cli.py --stubs /workspace/runs/stubs.json --host host.docker.internal --port 9090 -v</code></p>
+<p><em>если <code>ENTRYPOINT = python /app/send_stubs_cli.py</code> или <code>CMD</code> уже это делает)</em></p>
+<p>Не передаём <code>python /app/send_stubs_cli.py</code> в командной строке — передаём только аргументы скрипта:</p>
+<p><code>$repo="C:\draftai"</code></p>
+<p><code>docker run --rm `</code></p>
+<p><code>-v "${repo}\bim_core\runs:/workspace/runs:ro" `</code></p>
+<p><code>draftai/mcp-client:local `</code></p>
+<p><code>--stubs /workspace/runs/stubs.json --host host.docker.internal --port 9090 -v</code></p>
+<p><em>или если образ использует CMD:</em></p>
+<p><code>docker run --rm -v "${repo}\bim_core\runs:/app/bim_core/runs:ro" draftai/mcp-client:local</code></p>
+<p><strong>Полная команда вручную (переопределить ENTRYPOINT)</strong></p>
+<p>Можно временно обнулить ENTRYPOINT и передать команду целиком:</p>
+<p><code>docker run --rm --entrypoint "" `</code></p>
+<p><code>-v "${repo}\bim_core\runs:/workspace/runs:ro" `</code></p>
+<p><code>draftai/mcp-client:local `</code></p>
+<p><code>python /app/send_stubs_cli.py --stubs /workspace/runs/stubs.json --host host.docker.internal --port 9090</code></p>
+<h2 id="6">6. Советы и типичные ошибки<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<p>Где искать файлы? — Если не монтируешь <code>host-volume</code>, файлы останутся в контейнере и будут потеряны после <code>--rm</code>. Всегда монтируй <code>output</code> в папку хоста.</p>
+<p>Права доступа: при записи в смонтированную папку контейнер под пользователем <code>appuser</code> может не иметь прав. Решение: монтировать папку и выставлять подходящие права, или запускать контейнер от <code>root</code> (не рекомендуется для финального образа).</p>
+<p>FreeCAD: запуск MCP сервера внутри контейнера нежелателен — FreeCAD GUI нужен на хосте; используем клиентский контейнер для отправки стубов.</p>
+<h2 id="7-dockerfile">7. Где хранить Dockerfile в репо<a class="headerlink" href="#7-dockerfile" title="Permanent link">&para;</a></h2>
+<p><code>Dockerfile.nlp, Dockerfile.bim, Dockerfile.mcp-client</code> — лежат в корне репозитория. При билде указывай <code>-f</code> и контекст . (корень проекта)</p>
+<h2 id="8-docker-docker-desktop-gui">8. Запуск Docker контейнеров через Docker Desktop (GUI)<a class="headerlink" href="#8-docker-docker-desktop-gui" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Открыть Docker Desktop</strong></li>
+</ul>
+<p>Запусти Docker Desktop → перейди во вкладку Images. Там появятся образы, которые ты собрал, например:</p>
+<p><code>draftai/nlp:local</code></p>
+<p><code>draftai/bim:local</code></p>
+<p><code>draftai/mcp-client:local.</code></p>
+<ul>
+<li><strong>Запустить контейнер из образа</strong></li>
+</ul>
+<p>Найди нужный образ, например <code>draftai/nlp:local.</code></p>
+<p>Нажми <strong>Run</strong>.</p>
+<p>Появится окно настройки запуска контейнера.</p>
+<ul>
+<li><strong>Настроить Volumes (маппинг папок)</strong></li>
+</ul>
+<p>Нажми <strong>+ Add Volume.</strong></p>
+<p>Укажи <code>Host path</code> (путь на твоём ПК) и <code>Container path</code> (куда смонтировать в контейнере).
+Например:</p>
+<p>NLP:</p>
+<p><code>Host: C:\draftai\nlp_core\OUT</code></p>
+<p><code>Container: /workspace/output</code></p>
+<p>BIM:</p>
+<p><code>Host: C:\draftai\nlp_core\OUT → Container: /workspace/input:ro</code></p>
+<p><code>Host: C:\draftai\bim_core\runs → Container: /workspace/output</code></p>
+<ul>
+<li><strong>Указать команду/аргументы</strong></li>
+</ul>
+<p>В окне <strong>Run</strong> есть поле <code>Optional settings → Command.</code></p>
+<p>Если образ уже имеет CMD (например NLP запускается по умолчанию), можно оставить пустым.</p>
+<p>Если нужно передать аргументы (например BIM или MCP-client), впиши:</p>
+<p><code>python /app/bim_core/bim_core/run_cli.py --tz /workspace/input/result.json --out /workspace/output -v</code></p>
+<p>или</p>
+<p><code>python /app/send_stubs_cli.py --stubs /workspace/runs/stubs.json --host host.docker.internal --port 9090 -v</code></p>
+<ul>
+<li><strong>Запустить и проверить</strong></li>
+</ul>
+<p>Нажми <strong>Run container.</strong></p>
+<p>Перейди во вкладку <code>Containers / Apps</code> → выбери свой контейнер.</p>
+<p>Внутри доступны вкладки:</p>
+<p><strong>Logs</strong> — посмотреть вывод.</p>
+<p><strong>Files</strong> — исследовать файловую систему контейнера.</p>
+<p><strong>Exec (CLI)</strong> — открыть терминал внутри контейнера.</p>
+<p>Если контейнер сразу завершился, он отобразится как <strong>Exited</strong>. В этом случае:</p>
+<p>посмотри логи;</p>
+<p>при необходимости перезапусти контейнер с другим <strong>Command.</strong></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../local/" class="btn btn-neutral float-left" title="Локальная установка"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../docker_compose/" class="btn btn-neutral float-right" title="Docker Compose">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/LLC-DRAFTAI/draftai" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../local/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../docker_compose/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

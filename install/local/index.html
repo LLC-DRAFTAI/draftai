@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="DraftAI Team" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Локальная установка - DraftAI Docs</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "\u041b\u043e\u043a\u0430\u043b\u044c\u043d\u0430\u044f \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u043a\u0430";
+        var mkdocs_page_input_path = "install/local.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> DraftAI Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Введение</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Установка</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Локальная установка</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1">1. Требования</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2">2. Клонирование репозитория</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3">3. Создание корневого виртуального окружения (рекомендуется) и устанвока зависимостей</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4">4. Запуск модулей</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#nlp-core">NLP Core</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bim-core-nlp">BIM Core (после успешного NLP)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mcp-freecad">MCP (FreeCAD) — локально</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mcp">Отправить примитивы на MCP:</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#5-troubleshooting">5. Советы / Troubleshooting</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#6">6. Резюме</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#7-powershell">7. Последовательный запуск скриптов (PowerShell)</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docker/">Docker</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docker_compose/">Docker Compose</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Руководство</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../guide/nlp/">NLP Core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../guide/bim/">BIM Core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../guide/mcp_client/">MCP Client</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">DraftAI Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Установка</li>
+      <li class="breadcrumb-item active">Локальная установка</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/LLC-DRAFTAI/draftai/edit/master/docs/install/local.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="python-venv">Локальная установка (Python + venv)<a class="headerlink" href="#python-venv" title="Permanent link">&para;</a></h1>
+<p>Эта инструкция — для локальной разработки (без Docker). Подойдёт, если запускать NLP, BIM и клиент MCP напрямую на машине.</p>
+<h2 id="1">1. Требования<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Python ≥ 3.11 (рекомендуется 3.11 — 3.13).</li>
+<li>Git.</li>
+<li>При тестировании MCP требуется локально установленный <strong>FreeCAD</strong> (MCP сервер работает внутри FreeCAD).</li>
+</ul>
+<h2 id="2">2. Клонирование репозитория<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p><code>bash
+git clone &lt;репозиторий-git&gt; draftai
+cd draftai</code></p>
+<h2 id="3">3. Создание корневого виртуального окружения (рекомендуется) и устанвока зависимостей<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>Мы используем «гибрид»: предпочитаем корневой .venv, если его нет — используем компонентные .venv.</p>
+<p>Windows (PowerShell)</p>
+<p><code>cd nlp_core</code></p>
+<p><code>python -m venv .venv</code></p>
+<p><code>.\.venv\Scripts\Activate.ps1</code></p>
+<p><code>pip install --upgrade pip</code>
+<code>pip install -r requirements.txt</code></p>
+<p>Linux / macOS
+python -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip setuptools wheel</p>
+<p>ПРИМЕЧАНИЕ. В requirements.txt могут быть тяжёлые пакеты (transformers, ifcopenshell и т.д.) — установка займёт время.</p>
+<p>Установка модели spaCy (обязательно для NLP)
+<code>python -m spacy download ru_core_news_sm</code></p>
+<p>Если команда не срабатывает в текущем окружении — убедитесь, что активировали .venv перед запуском.</p>
+<h2 id="4">4. Запуск модулей<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h4 id="nlp-core">NLP Core<a class="headerlink" href="#nlp-core" title="Permanent link">&para;</a></h4>
+<p><code>python .\nlp_core\run_cli.py --out .\OUT\result.json -v</code></p>
+<p><em>либо, явно:</em></p>
+<p><code>python -m nlp_core.run nlp_core/input/TZ_object.docx nlp_core/OUT/result.json</code></p>
+<p>Проверь <code>nlp_core/OUT/result.json.</code></p>
+<h4 id="bim-core-nlp">BIM Core (после успешного NLP)<a class="headerlink" href="#bim-core-nlp" title="Permanent link">&para;</a></h4>
+<p>PowerShell (из корня репо):</p>
+<p><em>автопоиск IFC в bim_core/samples:</em></p>
+<p><code>python .\bim_core\bim_core\run_cli.py --tz .\nlp_core\OUT\result.json --out .\bim_core\runs -v</code></p>
+<p>В результате в bim_core/runs/ появятся stubs.json, match_report.json, spaces.json.</p>
+<h4 id="mcp-freecad">MCP (FreeCAD) — локально<a class="headerlink" href="#mcp-freecad" title="Permanent link">&para;</a></h4>
+<p>MCP-сервер нельзя полноценно запускать вне окружения FreeCAD (модуль FreeCAD отсутствует в обычном интерпретаторе).</p>
+<p>Запустить MCP в FreeCAD:</p>
+<p>Открой FreeCAD GUI.</p>
+<p>В Python-консоли (View → Panels → Python console) выполнить:</p>
+<p><code>exec(open(r"C:\path\to\draftai\mcp_server\mcp_serverV3.py", encoding="utf-8").read())</code>
+(подставь реальный путь к файлу)</p>
+<p>Например: <code>exec(open(r"C:\draftai\mcp_server\mcp_serverV3.py", encoding="utf-8").read())</code></p>
+<p>После этого MCP будет слушать <code>127.0.0.1:9090</code> (или тот, что у тебя в коде).</p>
+<h4 id="mcp">Отправить примитивы на MCP:<a class="headerlink" href="#mcp" title="Permanent link">&para;</a></h4>
+<p><code>python .\scripts\send_stubs_cli.py --stubs bim_core/runs/stubs.json -v</code></p>
+<p><code>python scripts/send_stubs_cli.py --stubs bim_core/runs/stubs.json --host 127.0.0.1 --port 9090 -v</code></p>
+<hr />
+<h2 id="5-troubleshooting">5. Советы / Troubleshooting<a class="headerlink" href="#5-troubleshooting" title="Permanent link">&para;</a></h2>
+<p>Если данные создаются внутри контейнера Docker (при использовании Docker) — см. <code>docs/install/docker.md</code> и как монтировать тома.</p>
+<ul>
+<li><strong>TZ файл не найден</strong></li>
+</ul>
+<p>Проверьте путь, откуда вы запускаете команду. Рекомендуется запускать из корня репозитория. Используйте абсолютный путь или корректируйте относительный.</p>
+<ul>
+<li><strong>No spaces.json provided or generated from IFC</strong></li>
+</ul>
+<p>Убедитесь, что <code>--ifc</code> указан или <code>ifc_reader.export_spaces</code> успешно создал <code>runs/spaces.json.</code>
+Проверьте логи <code>bim_core</code> — возможно <code>ifc_reader</code> упал из-за формата IFC.</p>
+<ul>
+<li><strong>ModuleNotFoundError: No module named 'FreeCAD'</strong></li>
+</ul>
+<p>MCP можно запускать только внутри FreeCAD или с FREECAD_PATH, указывающим на папку с бинарными модулями FreeCAD.
+Рекомендация: открыть FreeCAD GUI и выполнить <code>exec(open(r'.../mcp_serverV3.py').read())</code> в Python Console.</p>
+<ul>
+<li><strong>ConnectionRefusedError при отправке stubs</strong></li>
+</ul>
+<p>MCP не слушает указанный порт: убедитесь, что MCP запущен и слушает HOST:PORT.
+Проверьте, что <code>send_stubs_cli.py</code> посылает на тот же <code>host/port</code>, что и MCP.</p>
+<ul>
+<li><strong>.venv не коммитить.</strong> .venv должен быть в .gitignore.</li>
+</ul>
+<h2 id="6">6. Резюме<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<p>Для <strong>PoC</strong> удобнее локально: создать один <code>.venv</code>, установить <code>deps</code>, скачать <strong>spaCy</strong> модель, последовательно запускать <code>nlp → bim → MCP в FreeCAD</code> и отправлять <code>stubs.json.</code></p>
+<h2 id="7-powershell">7. Последовательный запуск скриптов (PowerShell)<a class="headerlink" href="#7-powershell" title="Permanent link">&para;</a></h2>
+<p><code>setup_dev_env.ps1</code> - скрипт автоматического запуска виртуального окружения в корневой папке
+запускается PowerShell командой: <code>.\scripts\setup_dev_env.ps1</code></p>
+<p><code>run_pipeline.ps1</code>  - скрипт автоматического последовательного выполнения NLP-BIM-MCP
+запускается PowerShell командой: <code>.\scripts\run_pipeline.ps1</code>. !!! Нужно проверить предварительно установку python -m spacy download ru_core_news_sm!!! без неё будет ошибка Step 1/4</p>
+<p>Запуск скриптов (Linux/MacOS) тестировал через git_bash работает
+<code>setup_dev_env.sh</code> - скрипт автоматического запуска виртуального окружения 
+<code>run_pipeline.sh</code> - скрипт автоматического последовательного выполнения NLP-BIM-MCP </p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../.." class="btn btn-neutral float-left" title="Введение"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../docker/" class="btn btn-neutral float-right" title="Docker">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/LLC-DRAFTAI/draftai" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../.." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../docker/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

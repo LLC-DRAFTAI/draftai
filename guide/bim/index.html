@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="DraftAI Team" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>BIM Core - DraftAI Docs</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "BIM Core";
+        var mkdocs_page_input_path = "guide/bim.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> DraftAI Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Введение</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Установка</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../install/local/">Локальная установка</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../install/docker/">Docker</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../install/docker_compose/">Docker Compose</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Руководство</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../nlp/">NLP Core</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">BIM Core</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_client/">MCP Client</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">DraftAI Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Руководство</li>
+      <li class="breadcrumb-item active">BIM Core</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/LLC-DRAFTAI/draftai/edit/master/docs/guide/bim.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="bim-core">BIM Core<a class="headerlink" href="#bim-core" title="Permanent link">&para;</a></h1>
+<p><strong>BIM Core</strong> — модуль для анализа IFC-модели и сопоставления помещений с данными из NLP (<code>result.json</code>). 
+В результате работы модуль генерирует <code>`stubs.json`</code> (список примитивов) и <code>`match_report.json`</code> (отчёт о сопоставлении),
+которые затем используются MCP Server для размещения примитивов в FreeCAD.</p>
+<hr />
+<p>📂 <strong>Структура</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">bim_core</span><span class="o">/</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">bim_core</span><span class="o">/</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">__init__</span><span class="p">.</span><span class="n">py</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">run</span><span class="p">.</span><span class="n">py</span><span class="w">              </span><span class="err">#</span><span class="w"> </span><span class="err">основная</span><span class="w"> </span><span class="err">логика</span><span class="w"> </span><span class="err">анализа</span><span class="w"> </span><span class="n">IFC</span><span class="w"> </span><span class="err">и</span><span class="w"> </span><span class="err">сопоставления</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">run_cli</span><span class="p">.</span><span class="n">py</span><span class="w">          </span><span class="err">#</span><span class="w"> </span><span class="n">CLI</span><span class="o">-</span><span class="n">wrapper</span><span class="w"> </span><span class="p">(</span><span class="err">рекомендуется</span><span class="w"> </span><span class="err">запускать</span><span class="w"> </span><span class="err">его</span><span class="p">)</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">ifc_reader</span><span class="p">.</span><span class="n">py</span><span class="w">       </span><span class="err">#</span><span class="w"> </span><span class="err">экспорт</span><span class="w"> </span><span class="n">spaces</span><span class="p">.</span><span class="n">json</span><span class="w"> </span><span class="err">из</span><span class="w"> </span><span class="n">IFC</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">generate_stubs</span><span class="p">.</span><span class="n">py</span><span class="w">   </span><span class="err">#</span><span class="w"> </span><span class="err">формирование</span><span class="w"> </span><span class="err">примитивов</span><span class="o">/</span><span class="err">заглушек</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">match_zones</span><span class="p">.</span><span class="n">py</span><span class="w">      </span><span class="err">#</span><span class="w"> </span><span class="err">логика</span><span class="w"> </span><span class="err">сопоставления</span><span class="w"> </span><span class="err">помещений</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="err">ТЗ</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">params_adapter</span><span class="p">.</span><span class="n">py</span><span class="w">   </span><span class="err">#</span><span class="w"> </span><span class="err">чтение</span><span class="o">/</span><span class="err">адаптация</span><span class="w"> </span><span class="err">параметров</span><span class="w"> </span><span class="err">из</span><span class="w"> </span><span class="n">TZ</span><span class="w"> </span><span class="n">json</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">synonyms</span><span class="p">.</span><span class="n">py</span><span class="w">         </span><span class="err">#</span><span class="w"> </span><span class="err">словарь</span><span class="o">/</span><span class="err">маппинг</span><span class="w"> </span><span class="err">синонимов</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">runs</span><span class="o">/</span><span class="w">                   </span><span class="err">#</span><span class="w"> </span><span class="err">результаты</span><span class="w"> </span><span class="err">анализа</span><span class="w"> </span><span class="p">(</span><span class="n">stubs</span><span class="p">.</span><span class="n">json</span><span class="p">,</span><span class="w"> </span><span class="n">match_report</span><span class="p">.</span><span class="n">json</span><span class="w"> </span><span class="err">и</span><span class="w"> </span><span class="err">т</span><span class="p">.</span><span class="err">д</span><span class="p">.)</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">samples</span><span class="o">/</span><span class="w">                </span><span class="err">#</span><span class="w"> </span><span class="err">примеры</span><span class="w"> </span><span class="err">входных</span><span class="w"> </span><span class="err">данных</span><span class="w"> </span><span class="p">(</span><span class="n">IFC</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">json</span><span class="w"> </span><span class="err">из</span><span class="w"> </span><span class="n">NLP</span><span class="p">)</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">place_radiators_clientV2</span><span class="p">.</span><span class="n">py</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="err">клиент</span><span class="w"> </span><span class="err">для</span><span class="w"> </span><span class="err">загрузки</span><span class="w"> </span><span class="n">stubs</span><span class="w"> </span><span class="err">через</span><span class="w"> </span><span class="n">MCP</span><span class="w"> </span><span class="p">(</span><span class="err">тесты</span><span class="o">/</span><span class="err">утилиты</span><span class="p">)</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
+<span class="err">└──</span><span class="w"> </span><span class="n">README</span><span class="p">.</span><span class="n">md</span><span class="w">               </span><span class="err">#</span><span class="w"> </span><span class="err">документация</span><span class="w"> </span><span class="err">модуля</span>
+</code></pre></div>
+
+<hr />
+<p><strong>Требования</strong></p>
+<ul>
+<li>Python <code>&gt;= 3.11</code> (проект тестировался на Python 3.13).  </li>
+<li>Для работы MCP (финальный этап визуализации) требуется локально установленный FreeCAD (не нужен для запуска анализа BIM Core).  </li>
+<li>Рекомендуется использовать виртуальное окружение (например, <code>.venv</code>), которое <strong>не</strong> коммитить.</li>
+</ul>
+<hr />
+<p>⚙️ <strong>Установка</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="nb">cd </span><span class="n">draftai</span><span class="p">\</span>
+<span class="n">python</span> <span class="n">-m</span> <span class="n">venv</span> <span class="p">.</span><span class="n">venv</span>
+<span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">Activate</span><span class="p">.</span><span class="n">ps1</span>    <span class="c"># PowerShell</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="p">-</span><span class="n">-upgrade</span> <span class="n">pip</span>
+</code></pre></div>
+
+<p>Для Linux/macOS используйте <code>`python -m venv .venv &amp;&amp; source .venv/bin/activate`.</code></p>
+<hr />
+<p><strong>Запуск (рекомендуется через <code>`run_cli.py`</code>)</strong></p>
+<p>Всегда предпочтительнее запускать <code>`bim_core/bim_core/run_cli.py`</code>, а не <code>`run.py`</code> напрямую — wrapper подготавливает окружение, автопоиск IFC, корректно управляет <code>`sys.path`</code> и cwd.</p>
+<p><strong>Примеры (из корня репозитория)</strong></p>
+<ul>
+<li>Запуск с явным указанием IFC-файла:</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="p">.\</span><span class="n">bim_core</span><span class="p">\</span><span class="n">bim_core</span><span class="p">\</span><span class="n">run_cli</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-tz</span> <span class="p">.\</span><span class="n">nlp_core</span><span class="p">\</span><span class="n">OUT</span><span class="p">\</span><span class="n">result</span><span class="p">.</span><span class="n">json</span> <span class="p">-</span><span class="n">-ifc</span> <span class="p">.\</span><span class="n">bim_core</span><span class="p">\</span><span class="n">samples</span><span class="p">\</span><span class="n">OfficeBuilding41_IFC1</span><span class="p">.</span><span class="n">ifc</span> <span class="p">-</span><span class="n">-out</span> <span class="p">.\</span><span class="n">bim_core</span><span class="p">\</span><span class="n">runs</span><span class="p">\</span><span class="n">test_out</span> <span class="n">-v</span>
+</code></pre></div>
+
+<ul>
+<li>Запуск с автопоиском IFC в <code>bim_core/samples/</code>:</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="p">.\</span><span class="n">bim_core</span><span class="p">\</span><span class="n">bim_core</span><span class="p">\</span><span class="n">run_cli</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-tz</span> <span class="p">.\</span><span class="n">nlp_core</span><span class="p">\</span><span class="n">OUT</span><span class="p">\</span><span class="n">result</span><span class="p">.</span><span class="n">json</span> <span class="p">-</span><span class="n">-out</span> <span class="p">.\</span><span class="n">bim_core</span><span class="p">\</span><span class="n">runs</span><span class="p">\</span><span class="n">test_out</span> <span class="n">-v</span>
+</code></pre></div>
+
+<p><strong>Аргументы:</strong>
+- <code>--tz</code> / <code>--nlp</code>: путь к JSON из NLP (обязателен).
+- <code>--ifc</code>: путь к IFC модели (опционально — автопоиск по <code>bim_core/samples/</code>).
+- <code>--spaces</code>: путь к <code>spaces.json</code> (альтернатива <code>--ifc</code>).
+- <code>--out</code>: директория вывода (обязательно).
+- <code>--config</code>: опциональная конфигурация.
+- <code>--verbose</code> / <code>-v</code>: подробный лог.</p>
+<hr />
+<p><strong>Что генерирует BIM Core</strong></p>
+<p>В папке <code>--out</code> (например <code>bim_core/runs/</code>) вы найдёте:</p>
+<ul>
+<li><code>stubs.json</code> — список сформированных примитивов для загрузки в MCP/FreeCAD. Пример элемента:</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;space-123&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Офис&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;system&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;heating&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;t_in&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">90</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;t_out&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">65</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;temperature&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">24</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;radiator_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;напольные&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.23</span><span class="p">,</span><span class="w"> </span><span class="mf">4.56</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<ul>
+<li><code>match_report.json</code> — подробный отчёт с полями <code>matched</code> и <code>unmatched_spaces</code> (с предложениями по сопоставлению).</li>
+<li><code>spaces.json</code> — подробный отчёт параметрами ifc модели.</li>
+</ul>
+<hr />
+<p><strong>Интеграция с MCP / FreeCAD</strong></p>
+<p>После генерации <code>`stubs.json`</code> вы можете отправить его на MCP server (FreeCAD) для фактического размещения объектов. Пример (клиент в <code>scripts/send_stubs_cli.py</code>):</p>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="p">.\</span><span class="n">scripts</span><span class="p">\</span><span class="n">send_stubs_cli</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-stubs</span> <span class="p">.\</span><span class="n">bim_core</span><span class="p">\</span><span class="n">runs</span><span class="p">\</span><span class="n">stubs</span><span class="p">.</span><span class="n">json</span> <span class="n">-v</span>
+</code></pre></div>
+
+<p><strong>Важно:</strong> MCP требует установленного FreeCAD — этот шаг выполняется локально и не входит в CI по умолчанию.</p>
+<hr />
+<p><strong>Отладка и часто встречающиеся ошибки</strong></p>
+<ul>
+<li><strong>TZ файл не найден</strong> — проверьте, что путь в <code>--tz</code> корректен; запускайте команды из корня репозитория или используйте абсолютные пути.  </li>
+<li><strong>No spaces.json provided or generated from IFC.</strong> — укажите <code>--spaces</code> или проверьте, что <code>export_spaces</code> успешно создал <code>spaces.json</code> (в <code>bim_core/runs/</code> или <code>bim_core/bim_core/runs/</code> в зависимости от cwd).  </li>
+<li><strong>Проблемы с сопоставлением</strong> — проверьте <code>bim_core/bim_core/synonyms.py</code> и <code>match_zones.py</code>; для диагностики запускайте с <code>-v</code>.  </li>
+<li><strong>IFC parser issues</strong> — если <code>ifc_reader</code> падает, проверьте файл IFC (формат, целостность) и зависимости (парсеры IFC).</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../nlp/" class="btn btn-neutral float-left" title="NLP Core"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../mcp_client/" class="btn btn-neutral float-right" title="MCP Client">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/LLC-DRAFTAI/draftai" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../nlp/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../mcp_client/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="DraftAI Team" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>NLP Core - DraftAI Docs</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "NLP Core";
+        var mkdocs_page_input_path = "guide/nlp.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> DraftAI Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Введение</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Установка</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../install/local/">Локальная установка</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../install/docker/">Docker</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../install/docker_compose/">Docker Compose</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Руководство</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">NLP Core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../bim/">BIM Core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_client/">MCP Client</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">DraftAI Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Руководство</li>
+      <li class="breadcrumb-item active">NLP Core</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/LLC-DRAFTAI/draftai/edit/master/docs/guide/nlp.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <p>Модуль NLP Core отвечает за анализ текстового технического задания (ТЗ) и формирование структурированного JSON, который используется на следующих этапах пайплайна (BIM Core и MCP Server).</p>
+<p>📂 <strong>Структура</strong></p>
+<div class="codehilite"><pre><span></span><code>nlp_core/
+├── config/            # Конфигурационные файлы (если нужны)
+├── input/             # Входные ТЗ (docx/pdf/txt)
+├── nlp_core/
+│   ├── __init__.py    # пустой или с минимальным кодом
+│   ├── run.py         # Основная логика анализа ТЗ
+│   └── run_cli.py     # CLI-обёртка (точка входа для запуска)
+├── OUT/               # Результаты анализа (JSON)
+├── requirements.txt   # Зависимости Python
+└── README.md          # Документация модуля
+</code></pre></div>
+
+<p>⚙️ <strong>Установка</strong></p>
+<ul>
+<li>Перейдите в каталог модуля:</li>
+</ul>
+<p><code>cd draftai\nlp_core</code></p>
+<ul>
+<li>Создайте и активируйте виртуальное окружение:</li>
+</ul>
+<p><code>python -m venv .venv</code></p>
+<p><code>.\.venv\Scripts\Activate.ps1</code></p>
+<ul>
+<li>Установите зависимости:</li>
+</ul>
+<p><code>pip install --upgrade pip</code></p>
+<p><code>pip install -r requirements.txt</code></p>
+<ul>
+<li>Установите модель spaCy для русского языка:</li>
+</ul>
+<p><code>python -m spacy download ru_core_news_sm</code></p>
+<p>🚀 <strong>Запуск</strong></p>
+<p>Показ справки</p>
+<p><code>python .\nlp_core\nlp_core\run_cli.py --help</code></p>
+<p>Запуск с указанием входного файла</p>
+<p><code>python .\nlp_core\nlp_core\run_cli.py --tz .\input\TZ_object.docx --out .\OUT\result.json -v</code></p>
+<p>Автоматический поиск входного файла</p>
+<p><em>Если --tz не указан, wrapper попытается найти первый </em>.docx, <em>.pdf или </em>.txt в папке nlp_core/input/:*</p>
+<p><code>python .\nlp_core\nlp_core\run_cli.py --out .\OUT\result.json -v</code></p>
+<p>🔑 <strong>Основные моменты</strong></p>
+<p>Запускать только <code>run_cli.py</code>, а не <code>run.py.</code></p>
+<p>Входные файлы должны быть в формате DOCX, PDF или TXT.</p>
+<p>Результаты сохраняются в папку <strong>OUT/.</strong></p>
+<p>Код возврата процесса:</p>
+<p>0 — успешное выполнение,</p>
+<p>-0 — ошибка (например, файл не найден или неверный формат).</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../install/docker_compose/" class="btn btn-neutral float-left" title="Docker Compose"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../bim/" class="btn btn-neutral float-right" title="BIM Core">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/LLC-DRAFTAI/draftai" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../../install/docker_compose/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../bim/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="DraftAI Team" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>MCP Client - DraftAI Docs</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "MCP Client";
+        var mkdocs_page_input_path = "guide/mcp_client.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> DraftAI Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Введение</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Установка</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../install/local/">Локальная установка</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../install/docker/">Docker</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../install/docker_compose/">Docker Compose</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Руководство</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../nlp/">NLP Core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../bim/">BIM Core</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">MCP Client</a>
+    <ul class="current">
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">DraftAI Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Руководство</li>
+      <li class="breadcrumb-item active">MCP Client</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/LLC-DRAFTAI/draftai/edit/master/docs/guide/mcp_client.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="mcp-server-freecad">MCP Server (FreeCAD)<a class="headerlink" href="#mcp-server-freecad" title="Permanent link">&para;</a></h1>
+<p><strong>MCP Server</strong> — лёгкий TCP-сервер, который принимает <code>stubs.json</code> (список примитивов) и размещает примитивы (радиаторы) в активном документе FreeCAD.<br />
+Проект ориентирован на локальную работу: MCP запускается внутри FreeCAD (GUI) или через системный Python при наличии доступа к библиотекам FreeCAD (переменная окружения <code>FREECAD_PATH</code>).</p>
+<blockquote>
+<p>Важно: модули <code>FreeCAD</code>/<code>Part</code> доступны <strong>только</strong> в окружении FreeCAD или если вы указали корректную папку с бинарными модулями через <code>FREECAD_PATH</code>. MCP не запускается в CI (GitHub Actions) по умолчанию — FreeCAD там нет.</p>
+</blockquote>
+<hr />
+<p>📂 <strong>Структура</strong></p>
+<div class="codehilite"><pre><span></span><code>mcp_server/
+├── mcp_serverV3.py        # основной код сервера (безопасен при импорте без FreeCAD)
+├── run_cli.py             # CLI-wrapper для запуска из системного Python
+└── README.md              # документация модуля
+</code></pre></div>
+
+<hr />
+<p><strong>Требования</strong></p>
+<ul>
+<li>Python <code>&gt;= 3.11</code> (для запуска wrapper и клиентских утилит).  </li>
+<li>Для фактического размещения примитивов — локально установленный <strong>FreeCAD</strong> (GUI или FreeCAD Python).  </li>
+<li>При запуске через системный <code>python</code> укажите <code>FREECAD_PATH</code>, указывающую на папку с <code>FreeCAD.pyd</code>/бинарными модулями (пример: <code>C:\Program Files\FreeCAD 0.21\bin</code>).</li>
+</ul>
+<hr />
+<p>⚙️ <strong>Установка</strong></p>
+<ol>
+<li>Клонируйте репозиторий и перейдите в корень проекта.  </li>
+<li>(Опционально) Создайте виртуальное окружение для утилит/скриптов <code>scripts/</code>:</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">venv</span> <span class="p">.</span><span class="n">venv</span>
+<span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">Activate</span><span class="p">.</span><span class="n">ps1</span>   <span class="c"># PowerShell</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="p">-</span><span class="n">-upgrade</span> <span class="n">pip</span>
+<span class="c"># затем установка зависимостей для nlp/bim при необходимости</span>
+</code></pre></div>
+
+<blockquote>
+<p>MCP сам по себе не имеет внешних pip-зависимостей кроме стандартных библиотек, но для запуска pipeline нужны зависимости NLP/BIM.</p>
+</blockquote>
+<hr />
+<p><strong>Сценарии запуска</strong></p>
+<p>1) Быстрый запуск внутри FreeCAD (рекомендуется для локального теста)</p>
+<p>Откройте FreeCAD GUI → <em>Python Console</em> и выполните:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">exec</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;C:\path\to\draftai\mcp_server\mcp_serverV3.py&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</code></pre></div>
+
+<p>При выполнении как <code>__main__</code> модуль попытается:
+- при необходимости создать новый документ (если ActiveDocument == None);
+- запустить сервер в фоновом потоке (<code>run_in_background()</code>), чтобы GUI остался интерактивным.</p>
+<p>Если автозапуск прошёл успешно — в Python Console/Report View появятся сообщения о старте сервера.</p>
+<hr />
+<p><strong>Опции <code>run_cli.py</code>:</strong>
+- <code>--host</code> (по умолчанию <code>127.0.0.1</code>) — хост для привязки.<br />
+- <code>--port</code> (по умолчанию <code>9090</code>) — TCP-порт.<br />
+- <code>--background</code> / <code>-b</code> — запуск в фоне (daemon thread).<br />
+- <code>--freecad-path</code> — путь к папке FreeCAD bin (опционально).<br />
+- <code>--verbose</code> / <code>-v</code> — подробные логи.</p>
+<hr />
+<p><strong>Отправка примитивов <code>stubs.json</code> (клиент)</strong></p>
+<p>После того как BIM сформировал <code>stubs.json</code> (в <code>bim_core/runs/.../stubs.json</code>), отправьте его на MCP:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="p">.\</span><span class="n">scripts</span><span class="p">\</span><span class="n">send_stubs_cli</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-stubs</span> <span class="n">bim_core</span><span class="p">/</span><span class="n">runs</span><span class="p">/</span><span class="n">stubs</span><span class="p">.</span><span class="n">json</span> <span class="n">-v</span>
+</code></pre></div>
+
+<p>Клиент подключится к MCP и отправит JSON (одна строка + <code>\n</code>). В активном документе FreeCAD должны появиться объекты.</p>
+<hr />
+<p><strong>Поведение кода и безопасность запуска в CI</strong></p>
+<ul>
+<li><code>mcp_serverV3.py</code> написан так, чтобы <strong>безопасно импортироваться без FreeCAD</strong>: при отсутствии FreeCAD модуль не падает, а логирует подсказки. Это позволяет запускать CI (линеры, тесты NLP/BIM) без ошибок.  </li>
+<li>Автозапуск при <code>__main__</code> (вызов <code>exec(...)</code> в FreeCAD) — удобная интерактивная фича; при импорте в wrapper (<code>run_cli.py</code>) автозапуск не происходит (чтобы CI/импорт не стартовал сервер).  </li>
+<li>В CI <strong>не</strong> запускаются шаги, требующие FreeCAD. Для покрытий, зависящих от MCP, используйте моки <code>FreeCAD</code>/<code>Part</code> в тестах.</li>
+</ul>
+<hr />
+<p><strong>Логи и видимость в FreeCAD</strong></p>
+<ul>
+<li>Для удобства логирование в <code>mcp_serverV3.py</code> направлено в стандартный <code>logging</code>. Мы также добавили <code>FreeCAD</code>-лог-хендлер, который при наличии <code>FreeCAD</code> перенаправляет <code>logging</code> в Report View / Python Console (<code>FreeCAD.Console.PrintMessage</code> / <code>PrintError</code>).  </li>
+<li>Если вы не видите сообщений в Report View, убедитесь, что вы:</li>
+<li>выполнили <code>exec(...)</code> внутри FreeCAD (или подключили <code>run_cli.py</code> с <code>--freecad-path</code>),  </li>
+<li>Report View открыт (View → Panels → Report view).  </li>
+</ul>
+<hr />
+<p><strong>Troubleshooting (частые ошибки)</strong></p>
+<ul>
+<li>
+<p><strong><code>ModuleNotFoundError: No module named 'FreeCAD'</code></strong><br />
+  — Запустите скрипт внутри FreeCAD (exec) или укажите <code>FREECAD_PATH</code> перед запуском <code>run_cli.py</code>.</p>
+</li>
+<li>
+<p><strong><code>ConnectionRefusedError</code> при отправке stubs</strong><br />
+  — MCP не слушает порт. Проверьте, запущен ли MCP (FreeCAD console / run_cli logs), и совпадают ли host/port у клиента и сервера.</p>
+</li>
+<li>
+<p><strong>Логи не отображаются в Report View</strong><br />
+  — Убедитесь, что <code>attach_freecad_logging()</code> вызван (в <code>mcp_serverV3.py</code> он вызывается после успешного импорта <code>FreeCAD</code>) и Report View открыт.</p>
+</li>
+</ul>
+<hr />
+<p><strong>Интеграция с Pipeline</strong></p>
+<ul>
+<li>В <code>scripts/run_pipeline_local.*</code> логика pipeline формирует <code>stubs.json</code> (NLP → BIM), затем предлагает/ждёт запуска MCP в FreeCAD, и отправляет <code>stubs.json</code> через <code>send_stubs_cli.py</code>. Это комбинация автоматизации и ручного шага, необходимого из-за GUI-зависимости FreeCAD.</li>
+</ul>
+<hr />
+<p><strong>Тестирование</strong></p>
+<ul>
+<li>Локально: откройте FreeCAD, выполните <code>exec(...)</code> или используйте <code>run_cli.py</code>, затем запустите <code>send_stubs_cli.py</code> и проверьте объекты в документе.  </li>
+<li>В CI: тесты, которые требуют работы с <code>FreeCAD</code> необходимо запускать с моками; сетевой клиент/сервер можно протестировать локально с простым TCP-эхо-сервером.</li>
+</ul>
+<hr />
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../bim/" class="btn btn-neutral float-left" title="BIM Core"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/LLC-DRAFTAI/draftai" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../bim/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

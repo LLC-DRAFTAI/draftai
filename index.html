@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="Документация проекта DraftAI (NLP → BIM → MCP-client)" /><meta name="author" content="DraftAI Team" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>DraftAI Docs</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "\u0412\u0432\u0435\u0434\u0435\u043d\u0438\u0435";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> DraftAI Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Введение</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#_1">📌 Структура проекта</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_2">📌 Подробно по модулям</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#nlp-core">NLP Core</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bim-core">BIM Core</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mcp-server">MCP Server</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#nlp-bim-mcp">📌 Последовательный запуск модулей (NLP → BIM → MCP)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pipeline">📌 Чеклист: что должно быть готово перед запуском pipeline</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Установка</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="install/local/">Локальная установка</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="install/docker/">Docker</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="install/docker_compose/">Docker Compose</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Руководство</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="guide/nlp/">NLP Core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="guide/bim/">BIM Core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="guide/mcp_client/">MCP Client</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">DraftAI Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Введение</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/LLC-DRAFTAI/draftai/edit/master/docs/index.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="draftai-documentation">DraftAI Documentation<a class="headerlink" href="#draftai-documentation" title="Permanent link">&para;</a></h1>
+<p>Добро пожаловать в документацию проекта <strong>DraftAI</strong> — ИИ-система автоматизации создания чертежей инженерных сетей.</p>
+<hr />
+<h2 id="_1">📌 Структура проекта<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>draftai/</p>
+<p>├── nlp_core/ # Модуль NLP для анализа ТЗ</p>
+<p>├── bim_core/ # Модуль BIM для обработки IFC моделей</p>
+<p>├── mcp_server/ # MCP сервер для FreeCAD</p>
+<p>├── scripts/ # Скрипты для настройки окружения и запуска пайплайна</p>
+<p>├── Dockerfile.* # Docker-образ для каждого компонента</p>
+<p>├── mkdocs.yml # Конфигурация документации</p>
+<p>├── .github/workflows # CI/CD конфигурация GitHub Actions</p>
+<p>└── README.md # Корневой README</p>
+<h2 id="_2">📌 Подробно по модулям<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h4 id="nlp-core">NLP Core<a class="headerlink" href="#nlp-core" title="Permanent link">&para;</a></h4>
+<p>nlp_core/config/ — настройки анализа ТЗ.</p>
+<p>nlp_core/input/ — входные ТЗ.</p>
+<p>nlp_core/OUT/ — результаты анализа.</p>
+<p>nlp_core/nlp_core/run.py — основной скрипт.</p>
+<p>nlp_core/nlp_core/run_cli.py — обёртка с argparse для CLI запуска.</p>
+<h4 id="bim-core">BIM Core<a class="headerlink" href="#bim-core" title="Permanent link">&para;</a></h4>
+<p>bim_core/bim_core/run.py — основной модуль BIM.</p>
+<p>bim_core/bim_core/run_cli.py — CLI-обёртка.</p>
+<p>bim_core/runs/ — результаты обработки IFC моделей.</p>
+<p>bim_core/samples/ — тестовые данные.</p>
+<p>bim_core/place_radiators_clientV2.py — основной скрипт загрузки примитивов в IFC через MCP.</p>
+<h4 id="mcp-server">MCP Server<a class="headerlink" href="#mcp-server" title="Permanent link">&para;</a></h4>
+<p>mcp_server/mcp_serverV3.py — запуск MCP сервера с масштабированием модели.</p>
+<p>mcp_server/run_cli.py — CLI-обёртка.</p>
+<h2 id="nlp-bim-mcp">📌 Последовательный запуск модулей (NLP → BIM → MCP)<a class="headerlink" href="#nlp-bim-mcp" title="Permanent link">&para;</a></h2>
+<p><strong>Pipeline состоит из трёх основных шагов:</strong></p>
+<p><strong>NLP</strong> — парсинг технического задания (DOCX/PDF/TXT) → генерируется nlp_core/OUT/result.json.</p>
+<p><strong>BIM</strong> — анализ IFC и сопоставление с данными из NLP → генерируются stubs.json и match_report.json в папке bim_core/runs/....</p>
+<p><strong>MCP</strong> — MCP-сервер (в окружении FreeCAD) принимает stubs.json и размещает примитивы (радиаторы) в активном документе FreeCAD.</p>
+<p>Важно: шаг MCP требует локально установленного FreeCAD (модули FreeCAD/Part доступны только в окружении FreeCAD). На CI (GitHub Actions) MCP запускать нельзя — вместо этого MCP тестируется через моки или локально.</p>
+<p><strong>Ожидаемые артефакты (куда смотреть)</strong></p>
+<p>nlp_core/OUT/result.json — результат NLP (TZ → JSON).</p>
+<p>bim_core/runs/stubs.json — сформированные примитивы.</p>
+<p>bim_core/runs/match_report.json — отчёт о сопоставлении помещений.</p>
+<p>bim_core/runs/spaces.json — отчёт о чтении параметров из IFC модели.</p>
+<h2 id="pipeline">📌 Чеклист: что должно быть готово перед запуском pipeline<a class="headerlink" href="#pipeline" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>Python &gt;= 3.11 и зависимости установлены для nlp_core и bim_core.</p>
+</li>
+<li>
+<p>IFC-модель в bim_core/samples/ или путь к ней известен.</p>
+</li>
+<li>
+<p>FreeCAD установлен локально и доступен (если хотите тестировать MCP).</p>
+</li>
+</ul>
+<p><em>Процесс автоматизации запуска описан в корневом README.md.</em> </p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="install/local/" class="btn btn-neutral float-right" title="Локальная установка">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/LLC-DRAFTAI/draftai" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+      <span><a href="install/local/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.6.1
+Build Date UTC : 2025-10-01 08:30:44.071624+00:00
+-->

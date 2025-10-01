@@ -3,6 +3,12 @@ site_description: Документация проекта DraftAI (NLP → BIM �
 site_author: DraftAI Team
 repo_url: https://github.com/LLC-DRAFTAI/draftai
 repo_name: GitHub
+edit_uri: "edit/main/docs"
+
+extra:
+  social:
+    - type: "github"
+      link: "https://github.com/LLC-DRAFTAI/draftai"
 
 nav:
   - Введение: index.md

@@ -16,7 +16,7 @@ nav:
       - MCP Client: guide/mcp_client.md
 
 theme:
-  name: material
+  name: readthedocs
   language: ru
   palette:
     - scheme: default

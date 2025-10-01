@@ -66,6 +66,15 @@ jobs:
           tags: draftai/mcp-client:latest
           push: false
 
+      - name: Install docs deps (mkdocs)
+        run: |
+          python -m pip install --upgrade pip
+          pip install mkdocs mkdocs-material
+
+      - name: Build docs (mkdocs)
+        run: |
+          mkdocs build --site-dir site
+
       - name: Publish docs to gh-pages (optional)
         if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3

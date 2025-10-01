@@ -30,10 +30,14 @@ jobs:
         run: |
           ruff nlp_core bim_core || true
 
-      - name: Run tests (pytest)
-        # If your tests require project dependencies, uncomment the install-requirements step below.
+      - name: Run tests (pytest) — run only if tests exist
         run: |
-          pytest -q
+          if git ls-files | grep -E '^tests/|test_.*\.py' >/dev/null 2>&1; then
+            echo "Tests found — running pytest"
+            pytest -q
+          else
+            echo "No tests found — skipping pytest"
+          fi
 
       # ---------------------------
       # Optional: install project deps (heavy). Uncomment if you need to run integration tests that require them.
